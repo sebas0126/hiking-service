@@ -9,23 +9,45 @@ app.use(cors());
 app.use(express.json());
 
 // Base de datos en memoria
-let routes = [
+const routes = [
   {
-    "id": 1,
-    "name": "Ruta 1",
-    "image": "https://via.placeholder.com/150",
-    "thumbnail": "https://via.placeholder.com/150",
-    "description": "Descripción de la ruta 1",
-    "distance": 10,
-    "duration": "1 hora",
-    "difficulty": "fácil",
-    "likes": 10,
-    "comments": [
-      {
-        "id": 1,
-        "name": "Comentario 1",
-        "description": "Descripción del comentario 1"
-      }
+    id: 1,
+    title: "Buena Vista",
+    image: "./assets/images/landscape-1.webp",
+    distance: "3.5 km",
+    difficulty: "Fácil",
+    time: "3 horas",
+    description: "Una de las mejores experiencias de senderismo en el Eje Cafetero se encuentra en Buenavista, un municipio conocido cariñosamente como el 'Balcón del Quindío' debido a su ubicación privilegiada en lo alto de una colina de la Cordillera Central, lo que le otorga las mejores vistas panorámicas de la región.",
+    likes: 124,
+    comments: [
+      { author: "Juan Perez", text: "Excelente ruta, me encantó.", date: "12/02/2026" }
+    ]
+  },
+  {
+    id: 2,
+    title: "Cascada del Silencio (Arenales)",
+    image: "./assets/images/landscape-2.webp",
+    distance: "5.2 km",
+    difficulty: "Media",
+    time: "4.5 horas",
+    description: "Un recorrido fascinante a través de densos bosques nativos y cruces de río que culmina en una majestuosa cascada escondida. Ideal para desconectar de la ciudad y conectar con la naturaleza, con varios tramos de ascensos moderados bajo la sombra de los árboles.",
+    likes: 342,
+    comments: [
+      { author: "Ana M.", text: "El agua estaba helada pero valió la pena cada paso.", date: "20/02/2026" },
+      { author: "Carlos G.", text: "Llevar buen calzado, hay mucho barro en la segunda mitad del trayecto.", date: "22/02/2026" }
+    ]
+  },
+  {
+    id: 3,
+    title: "Cerro Tusa",
+    image: "./assets/images/landscape-3.webp",
+    distance: "4.8 km",
+    difficulty: "Alta",
+    time: "6 horas",
+    description: "El ascenso a la pirámide natural más alta del mundo. Una ruta muy exigente que requiere buena condición física y técnica de agarre, ya que la pendiente supera los 45 grados en varios tramos. La recompensa es una vista inigualable de 360 grados en la cumbre.",
+    likes: 890,
+    comments: [
+      { author: "David", text: "La bajada es más dura que la subida. ¡Lleven guantes!", date: "24/02/2026" }
     ]
   }
 ];
