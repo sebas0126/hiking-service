@@ -89,15 +89,13 @@ app.patch('/api/routes/:id', (req, res) => {
   }
 
   // Si envían un nuevo comentario, se agrega
-  if (newComment && newComment.name && newComment.description) {
-    const nextCommentId = routes[routeIndex].comments.length > 0
-      ? Math.max(...routes[routeIndex].comments.map(c => c.id)) + 1
-      : 1;
-
+  if (newComment && newComment.author && newComment.text) {
     routes[routeIndex].comments.push({
-      id: nextCommentId,
-      name: newComment.name,
-      description: newComment.description
+      author: newComment.author,
+      text: newComment.text,
+      date: new Date().toLocaleDateString('es-ES', {
+        day: '2-digit', month: '2-digit', year: 'numeric'
+      })
     });
   }
 
