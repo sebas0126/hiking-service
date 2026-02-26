@@ -14,6 +14,7 @@ const routes = [
     id: 1,
     title: "Buena Vista",
     image: "./assets/images/landscape-1.webp",
+    imageThumb: "./assets/images/landscape-1-thumb.webp",
     distance: "3.5 km",
     difficulty: "Fácil",
     time: "3 hrs",
@@ -27,6 +28,7 @@ const routes = [
     id: 2,
     title: "Cascada del Silencio (Arenales)",
     image: "./assets/images/landscape-2.webp",
+    imageThumb: "./assets/images/landscape-2-thumb.webp",
     distance: "5.2 km",
     difficulty: "Media",
     time: "4.5 hrs",
@@ -41,6 +43,7 @@ const routes = [
     id: 3,
     title: "Cerro Tusa",
     image: "./assets/images/landscape-3.webp",
+    imageThumb: "./assets/images/landscape-3-thumb.webp",
     distance: "4.8 km",
     difficulty: "Alta",
     time: "6 hrs",
@@ -52,23 +55,11 @@ const routes = [
   }
 ];
 
-const gallery = [
-  {
-    id: 1,
-    image: "./assets/images/landscape-1-thumb.webp",
-    title: "Buena Vista"
-  },
-  {
-    id: 2,
-    image: "./assets/images/landscape-2-thumb.webp",
-    title: "Cascada del Silencio (Arenales)"
-  },
-  {
-    id: 3,
-    image: "./assets/images/landscape-3-thumb.webp",
-    title: "Cerro Tusa"
-  }
-];
+const gallery = routes.map(route => ({
+  id: route.id,
+  image: route.imageThumb,
+  title: route.title
+}));
 
 // 1. Endpoint GET: Obtener todas las rutas
 app.get('/api/routes', (req, res) => {
