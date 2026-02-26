@@ -16,7 +16,7 @@ const routes = [
     image: "./assets/images/landscape-1.webp",
     distance: "3.5 km",
     difficulty: "Fácil",
-    time: "3 horas",
+    time: "3 hrs",
     description: "Una de las mejores experiencias de senderismo en el Eje Cafetero se encuentra en Buenavista, un municipio conocido cariñosamente como el 'Balcón del Quindío' debido a su ubicación privilegiada en lo alto de una colina de la Cordillera Central, lo que le otorga las mejores vistas panorámicas de la región.",
     likes: 124,
     comments: [
@@ -29,7 +29,7 @@ const routes = [
     image: "./assets/images/landscape-2.webp",
     distance: "5.2 km",
     difficulty: "Media",
-    time: "4.5 horas",
+    time: "4.5 hrs",
     description: "Un recorrido fascinante a través de densos bosques nativos y cruces de río que culmina en una majestuosa cascada escondida. Ideal para desconectar de la ciudad y conectar con la naturaleza, con varios tramos de ascensos moderados bajo la sombra de los árboles.",
     likes: 342,
     comments: [
@@ -43,7 +43,7 @@ const routes = [
     image: "./assets/images/landscape-3.webp",
     distance: "4.8 km",
     difficulty: "Alta",
-    time: "6 horas",
+    time: "6 hrs",
     description: "El ascenso a la pirámide natural más alta del mundo. Una ruta muy exigente que requiere buena condición física y técnica de agarre, ya que la pendiente supera los 45 grados en varios tramos. La recompensa es una vista inigualable de 360 grados en la cumbre.",
     likes: 890,
     comments: [
@@ -52,9 +52,32 @@ const routes = [
   }
 ];
 
+const gallery = [
+  {
+    id: 1,
+    image: "./assets/images/landscape-1-thumb.webp",
+    title: "Buena Vista"
+  },
+  {
+    id: 2,
+    image: "./assets/images/landscape-2-thumb.webp",
+    title: "Cascada del Silencio (Arenales)"
+  },
+  {
+    id: 3,
+    image: "./assets/images/landscape-3-thumb.webp",
+    title: "Cerro Tusa"
+  }
+];
+
 // 1. Endpoint GET: Obtener todas las rutas
 app.get('/api/routes', (req, res) => {
   res.json(routes);
+});
+
+// 2. Endpoint GET: Obtener todas las galerías
+app.get('/api/gallery', (req, res) => {
+  res.json(gallery);
 });
 
 // 2. Endpoint PATCH: Actualizar likes y/o agregar comentarios
