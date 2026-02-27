@@ -106,6 +106,68 @@ app.patch('/api/routes/:id', (req, res) => {
   });
 });
 
+// Estructura en memoria para los favoritos
+// Formato esperado: { "uuid-del-usuario": [1, 2], "otro-uuid": [1] }
+let userFavorites = {};
+
+// 3. Endpoint POST: Agregar o quitar una ruta de favoritos (Toggle)
+app.post('/api/routes/:id/favorite', (req, res) => {
+  const routeId = parseInt(req.params.id);
+  // Obtenemos el ID del usuario desde un header personalizado
+  const userId = req.headers['x-user-id'];
+
+  if (!userId) {
+    return res.status(400).json({ error: 'Falta el identificador del usuario (x-user-id en headers)' });
+  }
+
+  // Validar que la ruta principal exista
+  const routeExists = routes.some(r => r.id === routeId);
+  if (!routeExists) {
+    return res.status(404).json({ error: 'Ruta no encontrada' });
+  }
+
+  // Si es la primera vez que este usuario guarda un favorito, inicializamos su array
+  if (!userFavorites[userId]) {
+    userFavorites[userId] = [];
+  }
+
+  const userFavs = userFavorites[userId];
+  const index = userFavs.indexOf(routeId);
+
+  // Si el ID ya está en su lista, lo quitamos (Desmarcar favorito)
+  if (index !== -1) {
+    userFavs.splice(index, 1);
+    return res.json({
+      message: 'Ruta removida de favoritos',
+      favoriteIds: userFavs
+    });
+  } else {
+    // Si no está, lo agregamos (Marcar favorito)
+    userFavs.push(routeId);
+    return res.json({
+      message: 'Ruta agregada a favoritos',
+      favoriteIds: userFavs
+    });
+  }
+});
+
+// 4. Endpoint GET: Obtener la lista de rutas favoritas completas de un usuario
+app.get('/api/favorites', (req, res) => {
+  const userId = req.headers['x-user-id'];
+
+  if (!userId) {
+    return res.status(400).json({ error: 'Falta el identificador del usuario' });
+  }
+
+  // Obtenemos los IDs guardados por el usuario (o un array vacío)
+  const userFavsIds = userFavorites[userId] || [];
+
+  // Filtramos la base de datos principal para devolver la data completa de esas rutas
+  const favoriteRoutesData = routes.filter(r => userFavsIds.includes(r.id));
+
+  res.json(favoriteRoutesData);
+});
+
 // Iniciar el servidor en el puerto 3001
 const PORT = 3001;
 app.listen(PORT, () => {
