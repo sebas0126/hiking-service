@@ -1,8 +1,8 @@
-const trails = require('../constants/trails.json')
+const db = require('../database/db.singleton')
 
 exports.getTrails = () => {
   try {
-    return trails;
+    return db.getRoutes();
   } catch (e) {
     throw Error(e)
   }
