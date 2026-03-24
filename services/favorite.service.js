@@ -1,32 +1,28 @@
-exports.getFavorites = () => {
-  try {
-    const userId = req.headers['x-user-id'];
+const db = require('../database/db.singleton');
 
-    if (!userId) {
-      return res.status(400).json({ error: 'Falta el identificador del usuario' });
-    }
+const userFavorites = {};
 
-    const userFavsIds = userFavorites[userId] || [];
-
-    const favoriteRoutesData = routes.filter(r => userFavsIds.includes(r.id));
-
-    return favoriteRoutesData;
-  } catch (e) {
-    throw Error(e)
-  }
-}
-
-exports.addFavorite = (req, res) => {
-  const routeId = parseInt(req.params.id);
-  const userId = req.headers['x-user-id'];
-
+exports.getFavorites = (userId) => {
   if (!userId) {
-    return res.status(400).json({ error: 'Falta el identificador del usuario (x-user-id en headers)' });
+    throw new Error('User ID is required');
   }
 
-  const routeExists = routes.some(r => r.id === routeId);
+  const routes = db.getRoutes();
+  const userFavsIds = userFavorites[userId] || [];
+  const favoriteRoutesData = routes.filter(r => userFavsIds.includes(r.id));
+
+  return favoriteRoutesData;
+};
+
+exports.addFavorite = (userId, routeId) => {
+  if (!userId) {
+    throw new Error('User ID is required');
+  }
+
+  const routes = db.getRoutes();
+  const routeExists = routes.some(r => r.id === parseInt(routeId));
   if (!routeExists) {
-    return res.status(404).json({ error: 'Ruta no encontrada' });
+    throw new Error('Route not found');
   }
 
   if (!userFavorites[userId]) {
@@ -34,19 +30,20 @@ exports.addFavorite = (req, res) => {
   }
 
   const userFavs = userFavorites[userId];
-  const index = userFavs.indexOf(routeId);
+  const routeIdInt = parseInt(routeId);
+  const index = userFavs.indexOf(routeIdInt);
 
   if (index !== -1) {
     userFavs.splice(index, 1);
-    return res.json({
-      message: 'Ruta removida de favoritos',
+    return {
+      message: 'Route removed from favorites',
       favoriteIds: userFavs
-    });
+    };
   } else {
-    userFavs.push(routeId);
-    return res.json({
-      message: 'Ruta agregada a favoritos',
+    userFavs.push(routeIdInt);
+    return {
+      message: 'Route added to favorites',
       favoriteIds: userFavs
-    });
+    };
   }
-}
+};

@@ -2,7 +2,8 @@ var favoriteService = require('../services/favorite.service')
 
 exports.getFavorites = (req, res) => {
   try {
-    const ans = favoriteService.getFavorite()
+    const userId = req.headers['x-user-id'];
+    const ans = favoriteService.getFavorites(userId)
     res.json(ans)
   } catch (e) {
     res.status(400).send(e.message)
@@ -11,9 +12,15 @@ exports.getFavorites = (req, res) => {
 
 exports.addFavorite = (req, res) => {
   try {
-    const ans = favoriteService.addFavorite(req.params.id)
+    const userId = req.headers['x-user-id'];
+    const routeId = req.params.id;
+    const ans = favoriteService.addFavorite(userId, routeId)
     res.json(ans)
   } catch (e) {
-    res.status(400).send(e.message)
+    if (e.message === 'Route not found') {
+      res.status(404).send(e.message);
+    } else {
+      res.status(400).send(e.message);
+    }
   }
 }

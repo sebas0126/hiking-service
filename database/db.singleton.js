@@ -32,4 +32,4 @@ class Database {
 }
 
 const dbInstance = new Database();
-export default dbInstance;
+module.exports = dbInstance;

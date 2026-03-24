@@ -34,9 +34,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Rutas
-app.use('/api/trails', trailRoute);
-app.use('/api/gallery', galleryRoute);
-app.use('/api/favorites', favoriteRoute);
+app.use(trailRoute);
+app.use(galleryRoute);
+app.use(favoriteRoute);
 
 // Iniciar el servidor en el puerto 3001
 const PORT = 3001;
