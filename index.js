@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors'); // Importamos cors
 const app = express();
@@ -9,7 +8,7 @@ const galleryRoute = require('./routes/gallery.route');
 // 1. Definimos un array con los dominios que tienen permiso
 const allowedOrigins = [
   'https://sebas0126.github.io', // Tu frontend en GitHub Pages
-  'http://127.0.0.1:5500'        // Entorno local
+  'http://localhost:3001'        // Entorno local
 ];
 
 // 2. Configuramos el middleware de CORS con esas opciones
@@ -40,9 +39,7 @@ app.use(galleryRoute);
 app.use(favoriteRoute);
 
 // Iniciar el servidor en el puerto 3001
-const PORT = process.env.PORT || 3001;
-const HOSTNAME = process.env.HOSTNAME || 'localhost';
-
-app.listen(PORT, HOSTNAME, () => {
-  console.log(`Servidor corriendo en http://${HOSTNAME}:${PORT}`);
+const PORT = 3001;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
