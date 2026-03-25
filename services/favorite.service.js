@@ -14,7 +14,7 @@ exports.getFavorites = (userId) => {
   return favoriteRoutesData;
 };
 
-exports.addFavorite = (userId, routeId) => {
+exports.toggleFavorite = (userId, routeId) => {
   if (!userId) {
     throw new Error('User ID is required');
   }
