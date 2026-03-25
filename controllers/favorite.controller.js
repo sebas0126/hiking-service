@@ -10,11 +10,11 @@ exports.getFavorites = (req, res) => {
   }
 }
 
-exports.toggleFavorite = (req, res) => {
+exports.addFavorite = (req, res) => {
   try {
     const userId = req.headers['x-user-id'];
     const routeId = req.params.id;
-    const ans = favoriteService.toggleFavorite(userId, routeId)
+    const ans = favoriteService.addFavorite(userId, routeId)
     res.json(ans)
   } catch (e) {
     if (e.message === 'Route not found') {
