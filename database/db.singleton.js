@@ -10,7 +10,6 @@ class Database {
     this.subscribers = new Set();
 
     Database.instance = this;
-    Object.freeze(this);
   }
 
   getRoutes() {
@@ -28,6 +27,15 @@ class Database {
       return this.routes[index];
     }
     return null;
+  }
+
+  addSubscriber = (email) => {
+    console.log(this);
+    if (this.subscribers.has(email)) {
+      throw new Error('Email already subscribed');
+    }
+    this.subscribers.add(email);
+    return { message: 'Successfully subscribed' };
   }
 }
 

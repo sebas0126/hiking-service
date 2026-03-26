@@ -4,11 +4,12 @@ const app = express();
 const trailRoute = require('./routes/trail.route');
 const favoriteRoute = require('./routes/favorite.route');
 const galleryRoute = require('./routes/gallery.route');
+const newsletterRoute = require('./routes/newsletter.route');
 
 // 1. Definimos un array con los dominios que tienen permiso
 const allowedOrigins = [
   'https://sebas0126.github.io', // Tu frontend en GitHub Pages
-  'http://localhost:3001'        // Entorno local
+  'http://127.0.0.1:5500',        // Entorno local
 ];
 
 // 2. Configuramos el middleware de CORS con esas opciones
@@ -37,6 +38,7 @@ app.use(express.json());
 app.use(trailRoute);
 app.use(galleryRoute);
 app.use(favoriteRoute);
+app.use(newsletterRoute);
 
 // Iniciar el servidor en el puerto 3001
 const PORT = 3001;
