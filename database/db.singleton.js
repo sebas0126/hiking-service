@@ -17,7 +17,9 @@ class Database {
   }
 
   addRoute(route) {
-    this.routes.push({ ...route, id: Date.now(), likes: 0, comments: [] });
+    const newRoute = { ...route, id: Date.now(), likes: 0, comments: [] };
+    this.routes.push(newRoute);
+    return newRoute;
   }
 
   updateRoute(id, newData) {
