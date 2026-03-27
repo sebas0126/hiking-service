@@ -30,12 +30,15 @@ class Database {
   }
 
   addSubscriber = (email) => {
-    console.log(this);
     if (this.subscribers.has(email)) {
       throw new Error('Email already subscribed');
     }
     this.subscribers.add(email);
     return { message: 'Successfully subscribed' };
+  }
+
+  getSubscribers() {
+    return [...this.subscribers];
   }
 }
 
