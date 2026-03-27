@@ -17,7 +17,9 @@ class Database {
   }
 
   addRoute(route) {
-    this.routes.push({ ...route, id: Date.now(), likes: 0, comments: [] });
+    const newRoute = { ...route, id: Date.now(), likes: 0, comments: [] };
+    this.routes.push(newRoute);
+    return newRoute;
   }
 
   updateRoute(id, newData) {
@@ -31,7 +33,7 @@ class Database {
 
   addSubscriber = (email) => {
     if (this.subscribers.has(email)) {
-      throw new Error('Email already subscribed');
+      throw new Error('Email already subscribed', { cause: 'ALREADY_SUBSCRIBED' });
     }
     this.subscribers.add(email);
     return { message: 'Successfully subscribed' };

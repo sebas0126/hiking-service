@@ -1,9 +1,5 @@
 const db = require('../database/db.singleton');
-
 const newsletterSubject = require('../observers/newsletter.subject');
-const emailObserver = require('../observers/newsletter.email.observer');
-
-newsletterSubject.attach(emailObserver);
 
 exports.getTrails = () => {
   try {
@@ -37,7 +33,14 @@ exports.updateTrail = (trailId, data) => {
 exports.createTrail = (data) => {
   try {
     const newTrail = db.addRoute(data);
-    newsletterSubject.notify({ type: 'broadcast', subject: 'Nueva ruta disponible', body: `Se ha añadido una nueva ruta: ${data.name}` });
+    const title = newTrail.title || 'Nueva ruta';
+    const description = newTrail.description || 'Sin descripción';
+
+    newsletterSubject.notify({
+      type: 'broadcast',
+      subject: `Nueva ruta: ${title}`,
+      body: `Se agregó una ruta nueva: "${title}", ${description}. Entra a la app para ver detalles, distancia y dificultad.`,
+    });
     return newTrail;
   } catch (e) {
     throw Error(e);
