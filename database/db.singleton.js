@@ -33,7 +33,7 @@ class Database {
 
   addSubscriber = (email) => {
     if (this.subscribers.has(email)) {
-      throw new Error('Email already subscribed');
+      throw new Error('Email already subscribed', { cause: 'ALREADY_SUBSCRIBED' });
     }
     this.subscribers.add(email);
     return { message: 'Successfully subscribed' };

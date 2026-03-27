@@ -34,10 +34,12 @@ exports.createTrail = (data) => {
   try {
     const newTrail = db.addRoute(data);
     const title = newTrail.title || 'Nueva ruta';
+    const description = newTrail.description || 'Sin descripción';
+
     newsletterSubject.notify({
       type: 'broadcast',
       subject: `Nueva ruta: ${title}`,
-      body: `Se agregó una ruta nueva: "${title}". Entra a la app para ver detalles, distancia y dificultad.`,
+      body: `Se agregó una ruta nueva: "${title}", ${description}. Entra a la app para ver detalles, distancia y dificultad.`,
     });
     return newTrail;
   } catch (e) {
