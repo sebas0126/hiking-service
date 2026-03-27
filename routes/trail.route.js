@@ -9,4 +9,6 @@ router.get('/api/trails/:id', trailController.getTrailById)
 
 router.patch('/api/trails/:id', trailController.updateTrail)
 
+router.post('/api/trails', trailController.createTrail)
+
 module.exports = router;

@@ -1,5 +1,10 @@
 const db = require('../database/db.singleton');
 
+const newsletterSubject = require('../observers/newsletter.subject');
+const emailObserver = require('../observers/newsletter.email.observer');
+
+newsletterSubject.attach(emailObserver);
+
 exports.getTrails = () => {
   try {
     return db.getRoutes();
@@ -24,6 +29,16 @@ exports.updateTrail = (trailId, data) => {
       throw new Error('Trail not found');
     }
     return updatedTrail;
+  } catch (e) {
+    throw Error(e);
+  }
+};
+
+exports.createTrail = (data) => {
+  try {
+    const newTrail = db.addRoute(data);
+    newsletterSubject.notify({ type: 'broadcast', subject: 'Nueva ruta disponible', body: `Se ha añadido una nueva ruta: ${data.name}` });
+    return newTrail;
   } catch (e) {
     throw Error(e);
   }
